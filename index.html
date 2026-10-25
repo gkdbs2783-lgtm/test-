@@ -1,13 +1,537 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charest="UTF-8">
-  <title>Hanmaru</title>
-</head>
-<body>
-  <h1>진시윤 탐구 보고서</h1>
-  <p>1. 남자를 밝힘</p>
-  <p>- 본인은 남자가 밝은 것이라고 주장</p>
-  <p>- 본 기록자는 이를 과민성 자기합리화 증후군으로 규정.</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iPhone UI Mockup</title>
+    <style>
+      :root {
+        --bg1: #0f172a;
+        --bg2: #1d4ed8;
+        --text: #f8fafc;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(96,165,250,0.4), transparent 30%),
+          radial-gradient(circle at 80% 10%, rgba(168,85,247,0.4), transparent 30%),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+        color: var(--text);
+      }
+
+      .phone-shell {
+        width: min(92vw, 390px);
+        height: min(94vh, 820px);
+        padding: 14px 14px 18px;
+        border-radius: 44px;
+        background: linear-gradient(145deg, #111827, #050816 40%, #181d2a 100%);
+        box-shadow:
+          0 30px 60px rgba(0,0,0,0.45),
+          inset 0 3px 6px rgba(255,255,255,0.18),
+          inset 0 -10px 25px rgba(0,0,0,0.25);
+        position: relative;
+      }
+
+      .phone {
+        width: 100%;
+        height: 100%;
+        border-radius: 36px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.08)), linear-gradient(180deg, rgba(59,130,246,0.55), rgba(99,102,241,0.35), rgba(236,72,153,0.28));
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+
+      .wallpaper {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(15,23,42,0.35), rgba(15,23,42,0.08)),
+          radial-gradient(circle at 20% 20%, rgba(125,211,252,0.65), transparent 20%),
+          radial-gradient(circle at 80% 15%, rgba(216,180,254,0.7), transparent 18%),
+          linear-gradient(160deg, #1d4ed8 0%, #3b82f6 18%, #312e81 42%, #1f2937 100%);
+      }
+
+      .wallpaper::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.08), transparent 30%, rgba(0,0,0,0.2)),
+          linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.08) 30%, transparent 60%);
+      }
+
+      .screen {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 18px 18px 12px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2px 8px 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.92);
+      }
+
+      .status-icons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .signal {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
+      }
+
+      .wifi {
+        width: 16px;
+        height: 12px;
+        position: relative;
+      }
+
+      .wifi::before, .wifi::after, .wifi span {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid rgba(255,255,255,0.9);
+        border-color: rgba(255,255,255,0.9) transparent transparent transparent;
+        border-radius: 50%;
+      }
+
+      .wifi::before { transform: scale(0.65); }
+      .wifi::after { transform: scale(0.35); }
+      .wifi span { transform: scale(0.15); }
+
+      .battery {
+        width: 22px;
+        height: 11px;
+        border-radius: 3px;
+        border: 1.5px solid rgba(255,255,255,0.9);
+        position: relative;
+      }
+
+      .battery::before {
+        content: "";
+        position: absolute;
+        right: -4px;
+        top: 2px;
+        width: 2px;
+        height: 5px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.9);
+      }
+
+      .battery::after {
+        content: "";
+        position: absolute;
+        inset: 2px 2px 2px 2px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.95);
+      }
+
+      .notch {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 30px;
+        border-radius: 18px;
+        background: rgba(0,0,0,0.8);
+        z-index: 20;
+      }
+
+      .notch::before {
+        content: "";
+        position: absolute;
+        inset: 8px 58px 8px 58px;
+        border-radius: 8px;
+        background: rgba(29,31,35,0.92);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 10px 4px;
+        z-index: 2;
+        position: relative;
+      }
+
+      .time {
+        font-size: 52px;
+        font-weight: 300;
+        letter-spacing: -2px;
+        margin-top: 6px;
+        line-height: 1;
+      }
+
+      .weather {
+        font-size: 15px;
+        margin-top: 8px;
+        color: rgba(255,255,255,0.82);
+      }
+
+      .widget-bar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .widget-pill {
+        background: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 999px;
+        padding: 8px 12px;
+        backdrop-filter: blur(8px);
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        flex: 1;
+        padding-top: 16px;
+      }
+
+      .widgets {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .panel {
+        background: rgba(15, 23, 42, 0.22);
+        border: 1px solid rgba(255,255,255,0.14);
+        backdrop-filter: blur(16px);
+        border-radius: 26px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 18px rgba(15,23,42,0.12);
+      }
+
+      .weather-card {
+        min-height: 170px;
+        padding: 16px 16px 14px;
+        background: linear-gradient(160deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(59,130,246,0.22), rgba(168,85,247,0.16));
+      }
+
+      .weather-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .weather-city { font-size: 12px; color: rgba(255,255,255,0.7); }
+
+      .weather-temp {
+        display: flex;
+        align-items: baseline;
+        margin-top: 16px;
+      }
+
+      .temp-big { font-size: 52px; font-weight: 600; line-height: 1; }
+      .temp-unit { font-size: 18px; margin-left: 4px; color: rgba(255,255,255,0.75); }
+
+      .mini-icons {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+        color: rgba(255,255,255,0.8);
+        font-size: 12px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .sun { background: #fbbf24; }
+      .rain { background: #7dd3fc; }
+      .wind { background: #c4b5fd; }
+
+      .booking-card {
+        padding: 14px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 170px;
+      }
+
+      .booking-label {
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.7);
+      }
+
+      .booking-date {
+        font-size: 32px;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      .bookings {
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .booking-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: rgba(255,255,255,0.82);
+      }
+
+      .booking-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 54px;
+        height: 24px;
+        border-radius: 999px;
+        background: rgba(103, 232, 249, 0.22);
+        border: 1px solid rgba(103,232,249,0.4);
+        color: #d9fbff;
+      }
+
+      .apps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px 10px;
+        padding: 0 2px 6px;
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .app-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 18px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 8px 14px rgba(15,23,42,0.18);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .app-icon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.24), transparent 45%);
+      }
+
+      .app-name { font-size: 11px; color: rgba(255,255,255,0.82); }
+
+      .blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+      .purple { background: linear-gradient(135deg, #8b5cf6, #c084fc); }
+      .pink { background: linear-gradient(135deg, #f472b6, #f9a8d4); }
+      .green { background: linear-gradient(135deg, #10b981, #6ee7b7); }
+      .orange { background: linear-gradient(135deg, #f59e0b, #fcd34d); }
+      .gray { background: linear-gradient(135deg, #64748b, #cbd5e1); }
+      .teal { background: linear-gradient(135deg, #14b8a6, #67e8f9); }
+      .red { background: linear-gradient(135deg, #ef4444, #fca5a5); }
+
+      .dock {
+        position: absolute;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        width: calc(100% - 42px);
+        height: 84px;
+        border-radius: 28px;
+        background: rgba(16, 24, 40, 0.35);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 0 12px;
+      }
+
+      .dock .app-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+      }
+
+      .home-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 138px;
+        height: 5px;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.92);
+        z-index: 30;
+      }
+
+      @media (max-width: 420px) {
+        .phone-shell {
+          width: 100vw;
+          height: 100vh;
+          border-radius: 0;
+          padding: 0;
+          background: #020817;
+        }
+
+        .phone {
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone-shell">
+      <div class="phone">
+        <div class="wallpaper"></div>
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+              <span class="signal"></span>
+              <span class="wifi"><span></span></span>
+              <span class="battery"></span>
+            </div>
+          </div>
+
+          <div class="topbar">
+            <div>
+              <div class="time" id="time">9:41</div>
+              <div class="weather">오늘은 맑고 화창해요</div>
+            </div>
+            <div class="widget-bar">
+              <div class="widget-pill">🔔 3</div>
+              <div class="widget-pill">☀️ 24°</div>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="widgets">
+              <div class="panel weather-card">
+                <div class="weather-row">
+                  <div class="weather-city">Seoul, KR</div>
+                  <div>☁️</div>
+                </div>
+                <div class="weather-temp">
+                  <span class="temp-big">24</span>
+                  <span class="temp-unit">°C</span>
+                </div>
+                <div class="mini-icons">
+                  <span><span class="dot sun"></span> 18°</span>
+                  <span><span class="dot rain"></span> 5%</span>
+                  <span><span class="dot wind"></span> 2km/h</span>
+                </div>
+              </div>
+
+              <div class="panel booking-card">
+                <div>
+                  <div class="booking-label">Today</div>
+                  <div class="booking-date">12</div>
+                </div>
+                <div class="bookings">
+                  <div class="booking-item">
+                    <span>Project</span>
+                    <span class="booking-tag">3 tasks</span>
+                  </div>
+                  <div class="booking-item">
+                    <span>Design</span>
+                    <span class="booking-tag">11:30</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="apps">
+              <div class="app">
+                <div class="app-icon blue"></div>
+                <div class="app-name">Messages</div>
+              </div>
+              <div class="app">
+                <div class="app-icon purple"></div>
+                <div class="app-name">Photos</div>
+              </div>
+              <div class="app">
+                <div class="app-icon pink"></div>
+                <div class="app-name">Camera</div>
+              </div>
+              <div class="app">
+                <div class="app-icon green"></div>
+                <div class="app-name">Maps</div>
+              </div>
+
+              <div class="app">
+                <div class="app-icon orange"></div>
+                <div class="app-name">Music</div>
+              </div>
+              <div class="app">
+                <div class="app-icon gray"></div>
+                <div class="app-name">Notes</div>
+              </div>
+              <div class="app">
+                <div class="app-icon teal"></div>
+                <div class="app-name">Mail</div>
+              </div>
+              <div class="app">
+                <div class="app-icon red"></div>
+                <div class="app-name">App Store</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dock">
+            <div class="app-icon blue"></div>
+            <div class="app-icon purple"></div>
+            <div class="app-icon green"></div>
+            <div class="app-icon orange"></div>
+            <div class="app-icon gray"></div>
+          </div>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const timeEl = document.getElementById('time');
+      const updateClock = () => {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        timeEl.textContent = `${hours}:${minutes}`;
+      };
+      updateClock();
+      setInterval(updateClock, 30000);
+    </script>
+  </body>
 </html>
